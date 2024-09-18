@@ -21,7 +21,7 @@ class m240916_094435_create_clients_and_addresses_tables extends Migration
         $this->createTable('addresses', [
             'id' => $this->primaryKey(),
             'client_id' => $this->integer()->notNull(),
-            'zip' => $this->string(9)->notNull(),
+            'zip' => $this->string(10)->notNull(),
             'street' => $this->string()->notNull(),
             'number' => $this->string(10)->notNull(),
             'city' => $this->string()->notNull(),
