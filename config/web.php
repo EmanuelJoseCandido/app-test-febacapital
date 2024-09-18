@@ -12,6 +12,18 @@ $config = [
         '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'errorHandler' => [
+            'errorAction' => null,
+        ],
+        'response' => [
+            'class' => \yii\web\Response::class,
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null) {
+                    $response->format = yii\web\Response::FORMAT_JSON;
+                }
+            },
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '6i_Qf09YpsbfNmH0OEHdqRGYDt34txlo',
@@ -23,11 +35,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\UserModel',
             'enableAutoLogin' => true,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
@@ -48,14 +57,13 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
+            'enableStrictParsing' => true, 
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'auth'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'client'],
             ],
         ],
-
     ],
     'params' => $params,
 ];
